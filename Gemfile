@@ -50,6 +50,10 @@ group :development, :test do
 
   # Use rspec-rails for testing
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
+  gem "dotenv-rails"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
