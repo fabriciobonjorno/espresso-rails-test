@@ -21,17 +21,17 @@ RSpec.describe Api::V1::RegisterServices::Create::UseCase do
   describe '#call' do
     context 'with valid params' do
       it 'creates a new company and user' do
-        result = subject.call(valid_params)
-        expect(result).to be_success
+        params = ActionController::Parameters.new(valid_params)
+        result = subject.call(params)
         expect(result).to be_success
       end
     end
 
     context 'with invalid params' do
       it 'returns validation errors' do
-        invalid_params = { name: '', cnpj: '', user: { name: '', email: '', password: '', password_confirmation: '' } }
+        invalid_params = ActionController::Parameters.new(name: '', cnpj: '',
+                                                          user: { name: '', email: '', password: '', password_confirmation: '' })
         result = subject.call(invalid_params)
-        expect(result).to be_failure
         expect(result).to be_failure
       end
     end

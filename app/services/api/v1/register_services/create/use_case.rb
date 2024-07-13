@@ -10,7 +10,7 @@ module Api
           step :output
 
           def validate_params(params)
-            validation = Contract.new.call(params)
+            validation = Contract.new.call(params.permit!.to_h)
             validation.success? ? Success(params) : Failure(validation.errors.to_h)
           end
 

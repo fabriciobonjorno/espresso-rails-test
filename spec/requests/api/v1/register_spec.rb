@@ -20,7 +20,7 @@ RSpec.describe Api::V1::RegisterController do
     context 'with valid params' do
       it 'creates a new company and user' do
         expect do
-          post '/api/v1/register/create', params: valid_params
+          post '/api/v1/register', params: valid_params
         end.to change(Company, :count).by(1).and change(User, :count).by(1)
 
         json_response = response.parsed_body
@@ -33,7 +33,7 @@ RSpec.describe Api::V1::RegisterController do
 
     context 'with invalid params' do
       it 'returns an error' do
-        post '/api/v1/register/create',
+        post '/api/v1/register',
              params: { name: '', cnpj: '', user: { name: '', email: '', password: '', password_confirmation: '' } }
 
         expect(response).to have_http_status(:unprocessable_entity)

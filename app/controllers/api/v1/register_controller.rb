@@ -4,7 +4,7 @@ module Api
   module V1
     class RegisterController < ApiController
       def create
-        Api::V1::RegisterServices::Create::UseCase.call(params.to_unsafe_h) do |on|
+        Api::V1::RegisterServices::Create::UseCase.call(params) do |on|
           on.failure(:validate_params) { |message| render json: message, status: :unprocessable_entity }
           on.failure(:create) { |message| render json: { message: message }, status: :unprocessable_entity }
           on.failure(:output) { |message| render json: { message: message }, status: :internal_server_error }
