@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_14_194842) do
+ActiveRecord::Schema.define(version: 2024_07_14_204513) do
+
+  create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.string "last4", default: "", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last4"], name: "index_cards_on_last4"
+    t.index ["user_id"], name: "index_cards_on_user_id"
+  end
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -43,6 +52,7 @@ ActiveRecord::Schema.define(version: 2024_07_14_194842) do
     t.index ["name"], name: "index_users_on_name"
   end
 
+  add_foreign_key "cards", "users"
   add_foreign_key "categories", "companies"
   add_foreign_key "users", "companies"
 end
