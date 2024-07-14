@@ -2,12 +2,10 @@
 
 module Api
   module V1
-    class RegisterController < ApiController
-      skip_before_action :authorize_access_request!, only: [:create]
-      skip_before_action :set_current_user, only: [:create]
-
+    class CategoriesController < ApiController
       def create
-        Api::V1::RegisterServices::Create::UseCase.call(params) do |on|
+        Api::V1::CategoriesServices::Create::UseCase.call([current_user, params]) do |on|
+          on.failure(:check_permission) { |message| render json: message, status: :unprocessable_entity }
           on.failure(:validate_params) { |message| render json: message, status: :unprocessable_entity }
           on.failure(:create) { |message| render json: { message: message }, status: :unprocessable_entity }
           on.failure(:output) { |message| render json: { message: message }, status: :internal_server_error }

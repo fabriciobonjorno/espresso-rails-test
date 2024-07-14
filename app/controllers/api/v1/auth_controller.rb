@@ -4,6 +4,7 @@ module Api
   module V1
     class AuthController < ApiController
       skip_before_action :authorize_access_request!, only: [:login]
+      skip_before_action :set_current_user, only: [:login]
 
       def login
         Api::V1::AuthServices::Login::UseCase.call(params) do |on|
@@ -13,11 +14,7 @@ module Api
           on.failure(:output) { |message| render json: { message: message }, status: :internal_server_error }
           on.failure { |response| render json: response, status: :internal_server_error }
           on.success do |message, login_data|
-            response.set_cookie(JWTSessions.access_cookie,
-                                value: login_data[:access_token],
-                                httponly: true,
-                                secure: Rails.env.production?)
-            render json: { message: message, csrf: login_data[:csrf] }, status: :created
+            render json: { message: message, data: login_data }, status: :created
           end
         end
       end

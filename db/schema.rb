@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_12_182651) do
+ActiveRecord::Schema.define(version: 2024_07_14_194842) do
+
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_categories_on_company_id"
+    t.index ["name"], name: "index_categories_on_name"
+  end
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -34,5 +43,6 @@ ActiveRecord::Schema.define(version: 2024_07_12_182651) do
     t.index ["name"], name: "index_users_on_name"
   end
 
+  add_foreign_key "categories", "companies"
   add_foreign_key "users", "companies"
 end

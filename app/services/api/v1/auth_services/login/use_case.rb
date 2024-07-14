@@ -27,7 +27,6 @@ module Api
           def create_session(params)
             user_params = params[:params]
             user = params[:user]
-
             if user&.authenticate(user_params[:password])
               payload = { user_id: user.id }
               session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)

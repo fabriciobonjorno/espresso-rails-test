@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       delete 'logout', to: 'auth#logout'
 
       post 'user/new', to: 'users#create'
+      post 'category/new', to: 'categories#create'
     end
   end
 end
