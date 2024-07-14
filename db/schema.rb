@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_14_204513) do
+ActiveRecord::Schema.define(version: 2024_07_14_215614) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "last4", default: "", null: false
@@ -39,6 +39,25 @@ ActiveRecord::Schema.define(version: 2024_07_14_204513) do
     t.index ["name"], name: "index_companies_on_name"
   end
 
+  create_table "statements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.datetime "performed_at"
+    t.integer "cost"
+    t.string "transaction_id"
+    t.bigint "category_id"
+    t.bigint "card_id"
+    t.integer "status", default: 0
+    t.string "merchant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_statements_on_card_id"
+    t.index ["category_id"], name: "index_statements_on_category_id"
+    t.index ["cost"], name: "index_statements_on_cost"
+    t.index ["merchant"], name: "index_statements_on_merchant"
+    t.index ["performed_at"], name: "index_statements_on_performed_at"
+    t.index ["status"], name: "index_statements_on_status"
+    t.index ["transaction_id"], name: "index_statements_on_transaction_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -54,5 +73,7 @@ ActiveRecord::Schema.define(version: 2024_07_14_204513) do
 
   add_foreign_key "cards", "users"
   add_foreign_key "categories", "companies"
+  add_foreign_key "statements", "cards"
+  add_foreign_key "statements", "categories"
   add_foreign_key "users", "companies"
 end

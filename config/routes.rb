@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       post 'category/new', to: 'categories#create'
       post 'card/new', to: 'cards#create'
       post 'card/list', to: 'cards#list'
+      post 'baas/webhook', to: 'baas#webhook'
     end
   end
 end
