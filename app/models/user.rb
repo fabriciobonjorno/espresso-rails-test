@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   belongs_to :company, default: -> { Current.company }
+  has_many :cards, dependent: :destroy
 
   enum role: { admin: 0, member: 1 }
 

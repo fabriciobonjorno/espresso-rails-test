@@ -7,6 +7,7 @@ class Company < ApplicationRecord
   validate :valid_cnpj
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :cards, through: :users
 
   def clean_cnpj
     self.cnpj = cnpj.gsub(/[^\d]/, '') if attribute_present?('cnpj')

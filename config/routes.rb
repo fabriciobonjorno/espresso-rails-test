@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post 'user/new', to: 'users#create'
       post 'category/new', to: 'categories#create'
       post 'card/new', to: 'cards#create'
+      post 'card/list', to: 'cards#list'
     end
   end
 end
