@@ -3,6 +3,8 @@
 module Api
   module V1
     class RegisterController < ApiController
+      skip_before_action :authorize_access_request!, only: [:create]
+
       def create
         Api::V1::RegisterServices::Create::UseCase.call(params) do |on|
           on.failure(:validate_params) { |message| render json: message, status: :unprocessable_entity }
