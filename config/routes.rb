@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'register', to: 'register#create'
       post 'login', to: 'auth#login'
+      post 'settings', to: 'auth#settings'
       delete 'logout', to: 'auth#logout'
+
+      post 'user/new', to: 'users#create'
     end
   end
 end

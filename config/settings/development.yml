@@ -1,0 +1,13 @@
+base_routes:
+  default:
+    - "login"
+    - "logout"
+  admin_access:
+    users:
+      - "new"
+      - "create"
+      - "edit"
+      - "delete"
+  member_access:
+    users:
+      - "edit"

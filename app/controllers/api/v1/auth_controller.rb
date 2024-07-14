@@ -22,11 +22,34 @@ module Api
         end
       end
 
+      def settings
+        if current_user.admin?
+          access = Settings.base_routes.admin_access
+        elsif current_user.member?
+          access = Settings.base_routes.member_access
+        end
+
+        return render json: { message: 'Não foi possível listar os settings' } if access.nil?
+
+        render json: format_access(access)
+      end
+
       def logout
         Api::V1::AuthServices::Logout::UseCase.call(payload) do |on|
           on.failure { |response| render json: response, status: :internal_server_error }
           on.success { |response| render json: response, status: :ok }
         end
+      end
+
+      private
+
+      def format_access(access)
+        byebug
+        formatted_access = {}
+        access.each do |resource, actions|
+          formatted_access[resource] = actions
+        end
+        formatted_access
       end
     end
   end
