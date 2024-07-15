@@ -30,8 +30,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'config'
 # Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
 gem 'jwt_sessions'
+gem 'mini_magick', '~> 4.8'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'dry-transaction'

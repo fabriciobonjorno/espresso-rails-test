@@ -5,4 +5,5 @@ class Card < ApplicationRecord
   validates :last4, uniqueness: { case_sensitive: false, scope: %i[user_id] }, if: -> { will_save_change_to_last4? }
 
   belongs_to :user
+  has_many :statements, dependent: :destroy
 end

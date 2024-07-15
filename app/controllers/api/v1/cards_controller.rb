@@ -28,6 +28,30 @@ module Api
           end
         end
       end
+
+      def list_transactions
+        Api::V1::CardsServices::ListTransactions::UseCase.call([current_user, params]) do |on|
+          on.failure(:validate_params) { |message| render json: message, status: :unprocessable_entity }
+          on.failure(:find_transactions) { |message| render json: message, status: :unprocessable_entity }
+          on.failure(:output) { |message| render json: { message: message }, status: :internal_server_error }
+          on.failure { |response| render json: response, status: :internal_server_error }
+          on.success do |message, user_data|
+            render json: { message: message, data: user_data }, status: :created
+          end
+        end
+      end
+
+      def send_receipt
+        Api::V1::CardsServices::SendReceipt::UseCase.call(params) do |on|
+          on.failure(:validate_params) { |message| render json: message, status: :unprocessable_entity }
+          on.failure(:update_transactions) { |message| render json: message, status: :unprocessable_entity }
+          on.failure(:output) { |message| render json: { message: message }, status: :internal_server_error }
+          on.failure { |response| render json: response, status: :internal_server_error }
+          on.success do |message, user_data|
+            render json: { message: message, data: user_data }, status: :created
+          end
+        end
+      end
     end
   end
 end
